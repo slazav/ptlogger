@@ -1,0 +1,20 @@
+Library sizes:
+
+C - common part
+
+C + RTC  = 10460
+C + TEMP = 10416
+C + PRES = 13898
+C + CARD = 16092
+C + DISP = 17242
+C + DISP + RTC = 20350      
+
+RTC  = 3108
+TEMP = 2506
+PRES = 6310
+CARD = 6202  -- open/close 4060, begin 1304
+DISP = 9890  -- begin 1120
+C = 7352
+
+all = 29914
+

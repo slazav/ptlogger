@@ -1,0 +1,30 @@
+Pressure + temperature logger based on Adafruit feather.
+
+parts:
+  Adafruit feather 32u4 Adalogger (main board + SD-card)
+  FeatherWing OLED 128x32 (display + 3 buttons)
+  BMP180 breakout (pressure + temperature + altitude sensor)
+  MCP9808 breakout (temperature sensor)
+  DS3231 breakout (real time clock)
+  + connectors
+  + self-made PCB (see pcb folder)
+  + box (see box3d folder)
+
+Arduino libraries:
+  Wire              (I2C)
+  SPI + SD          (SD-card)
+  Adafruit_BMP085_U (BMP180)
+  Adafruit-GFX      (graphics) -- Not needed, use local smaller version instead
+  Adafruit_SSD1306  (display)  -- Not needed, use local smaller version instead
+  Adafruit_MCP9808  (MCP9808) -- Not needed, use low-level I2C instead
+  RTClib            (DS3231)  -- Not needed, use low-level I2C instead
+
+All libraries workes, but program size is too large if all of them are included.
+Using a simplified local version of Adafruit-GFX + Adafruit_SSD1306 solves this problem
+
+assembling:
+
+It is good to use connectors between main board, display board and sensor board.
+Then you can easily debug the device, fix it, or use the main board for something else.
+Size of the device is larger in this case.
+I used connectors for display but soldered the sensor board.
