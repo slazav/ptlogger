@@ -18,7 +18,7 @@ module rbox(L,W,H,R, s=1){
 }
 
 // rounded box with non-linear extruding
-rri=20;
+rri=5;
 module rrbox(L,W,H,R, SL,SW){
   ddSL = pow(SL,2/rri/(rri-1));
   ddSW = pow(SW,2/rri/(rri-1));
