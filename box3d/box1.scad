@@ -38,27 +38,7 @@ Wp = 6;
 Rp = 0.5;
 Xp = L/2-14;
 
-module rbox(L,W,H,R, s1=1, s2=1){
-  linear_extrude(height=H, scale=s1){
-    // roundings
-    for (x=[-1,1], y=[-1,1]){
-      translate([x*(L/2-R), y*(W/2-R)])
-        circle(r=R, $fn=100);
-    }
-    // body
-    translate([0,0,H/2]){
-      square([L-2*R,W], center=true);
-      square([L,W-2*R], center=true);
-    }
-  }
-}
-module half_box(L,W,H,R){
-  hull(){
-    rbox(L+2*T,W+2*T,H,R+T);
-    translate([0,0,-T])
-      rbox(L,W,T,R);
-  }
-}
+use <inc.scad>;
 
 module inner_part(){
   difference(){
@@ -67,22 +47,20 @@ module inner_part(){
       // buttons
       for (i=[0:len(Xb)-1]){
         translate([Xb[i],Yb[i],dT]) rotate([0,180])
-          rbox(Wb,Wb,T+2*dT,Rb[i],3);
+          rrbox(Wb,Wb,T+2*dT,Rb[i],3,2.5);
       }
       // screen
-      //translate([Xs,Ys,-T-dT])
-      //cube([Ls,Hs,T+2*dT]);
       translate([0,0,dT]) rotate([0,180])
-        rbox(Ls,Ws,T+2*dT,Rs,1.4);
+        rrbox(Ls,Ws,T+2*dT,Rs,1.5,1.5);
       // usb
       translate([-L/2+dT,0, Zu+Hu/2]) rotate([0,-90])
-        rbox(Hu,Wu,T+2*dT,Ru,1.4);
+        rrbox(Hu,Wu,T+2*dT,Ru,2,2);
       // sd-card
       translate([L/2-dT,0, Zsd+Hsd/2]) rotate([0,90])
-        rbox(Hsd,Wsd,T+2*dT,Rsd,1.4);
+        rrbox(Hsd,Wsd,T+2*dT,Rsd,2,2);
       // power
-      translate([-Xp,-W/2-dT, Zp+Hp/2]) rotate([0,90,-90])
-        rbox(Hp,Wp,T+2*dT,Rp,1.4);
+      translate([-Xp,-W/2+dT, Zp+Hp/2]) rotate([0,90,-90])
+        rrbox(Hp,Wp,T+2*dT,Rp,1.4,1.4);
     }
     for (x=[-1,1], y=[-1,1]){
       translate([x*(L/2-R), y*(W/2-R),-dT])
@@ -92,11 +70,10 @@ module inner_part(){
 }
 
 
-
 difference(){
   union(){
-    half_box(L,W,H,R);
-    translate([0,0,H-3*T]) half_box(L+2*T,W+2*T,T,R+T);
+    half_box(L,W,H,R,T);
+    translate([0,0,H-3*T]) half_box(L+2*T,W+2*T,T,R+T,T);
     for (x=[-1,1]){
       translate([0,x*(W/2+T),H-T]) rotate([0,90])
         cylinder(r=T/2, h=L-4*R, center=true, $fn=50);
@@ -105,5 +82,7 @@ difference(){
     }
   }
   inner_part();
-
 }
+
+//        %rbox(Hp,Wp,T+2*dT,Rp,1.4,1.4);
+//      rrbox(Hp,Wp,T+2*dT,Rp,1.4,1.4);
